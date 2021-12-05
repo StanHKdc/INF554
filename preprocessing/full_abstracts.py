@@ -22,18 +22,16 @@ for line in tqdm(lines):
     dictionary = dict(big_dict['InvertedIndex'])
 
     text = ['']*length
-    for i in len(dictionary):
+    for i in range(len(dictionary)):
         word, positions = dictionary.popitem()
         for position in positions:
             text[position]=word
-    text = ' '.join(text)
-    text = text.translate(str.maketrans(string.punctuation+'\n'+'\r', ' '*len(string.punctuation+'\n'+'\r')))
-    text = text.lower()
-    text = text.split()
+    text = [w.lower() for w in text]
     stop_words = set(stopwords.words('english'))
     text = [w for w in text if not w in stop_words]
-
-    full_abstracts.write(abstractID+' : '+text+'\n')
+    text = ' '.join(text)
+    text = text.translate(str.maketrans(string.punctuation+'\n'+'\r', ' '*len(string.punctuation+'\n'+'\r')))
+    full_abstracts.write(abstractID+' : '+' '.join(text.split())+'\n')
 
 dirty_abstracts.close()
 full_abstracts.close()
