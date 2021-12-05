@@ -13,10 +13,8 @@ for abstract in tqdm(abstracts):
     words = splited[1].split(';')
     words[-1] = words[-1][:-1]
     for word in words:
-        if inv_index.get(word)==None:
-            inv_index.update({word :[int(id)]})
-        else:
-            inv_index.update({word : inv_index[word]+[int(id)]})
+        inv_index.setdefault(word,[])
+        inv_index[word].append(int(id))
 print("---")
 for k, v in inv_index.items():
     invertedIndex.write(k + ' : '+ str(v) + '\n')
